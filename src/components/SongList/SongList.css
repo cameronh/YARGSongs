@@ -1,0 +1,90 @@
+.song-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.song-card {
+  display: grid;
+  grid-template-columns: 100px 2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.song-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.song-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.song-details h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.song-difficulty {
+  display: flex;
+  flex-direction: column;
+}
+
+.instrument {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.instrument img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.song-uploader {
+  text-align: center;
+}
+
+.uploader-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.song-download {
+  text-align: center;
+}
+
+.song-download button {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.song-download p {
+  margin: 0;
+}
+
+.filled {
+  color: black; /* Change this to the color you want for filled circles */
+}
+
+span {
+  font-size: 16px;
+  margin: 0 2px;
+  color: #ccc; /* Default color for unfilled circles */
+}

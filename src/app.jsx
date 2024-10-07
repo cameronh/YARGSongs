@@ -1,10 +1,10 @@
 import React from "react";
+import DataFetch from "./components/DataFetch/DataFetch.jsx";
 
 function App() {
   return (
     <div>
-      <h1>💖 Hello World!</h1>
-      <p>Welcome to your Electron application.</p>
+      <DataFetch />
     </div>
   );
 }
