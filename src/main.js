@@ -1,16 +1,19 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Notification } = require('electron');
+import electronDl from 'electron-dl';
+import { download, CancelError } from 'electron-dl';
 const axios = require('axios');
-const path = require('path');
-const fs = require('fs');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+electronDl();
+
+let mainWindow;
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1920,
     height: 1080,
     webPreferences: {
@@ -62,5 +65,27 @@ ipcMain.handle('fetch-data', async (event, url, postData) => {
     return response.data;
   } catch (error) {
     return { error: error.message };
+  }
+});
+
+ipcMain.handle('download-file', async (event, fileUrl) => {
+  const url = "https://rhythmverse.co" + fileUrl;
+  const win = BrowserWindow.getFocusedWindow();
+  try {
+    console.log(await download(win, url));
+    new Notification({
+      title: 'Download Complete',
+      body: url,
+    }).show()
+  } catch (error) {
+    new Notification({
+      title: 'Error',
+      body: error,
+    }).show()
+    if (error instanceof CancelError) {
+      console.info('item.cancel() was called');
+    } else {
+      console.error(error);
+    }
   }
 });

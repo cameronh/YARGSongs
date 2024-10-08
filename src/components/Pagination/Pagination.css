@@ -1,0 +1,19 @@
+.page-container {
+  display: flex;
+  gap: .5rem;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+
+.page-container p {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.page-container .selected {
+  color: #00b2ff;
+}
+
+.page-container p:hover {
+  color: #00b2ff;
+}

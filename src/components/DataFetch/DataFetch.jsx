@@ -1,47 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import SongList from '../SongList/SongList.jsx';
+import './DataFetch.css';
+import SongContainer from '../SongContainer/SongContainer.jsx';
 const { ipcRenderer } = window.require('electron');
 
 //https://rhythmverse.co/api/yarg/songfiles/list
+
+const listEndpoint = 'https://rhythmverse.co/api/yarg/songfiles/list'
+const searchEndpoint = 'https://rhythmverse.co/api/yarg/songfiles/search/live'
 
 const formData = new URLSearchParams();
 formData.append('sort[0][sort_by]', 'downloads');
 formData.append('sort[0][sort_order]', 'DESC');
 formData.append('data_type', 'full');
-formData.append('text', 'Alice in Chains');
+formData.append('text', '');
 formData.append('page', 1);
 formData.append('records', 25);
 
-const formDataObj = Object.fromEntries(formData);
-
 function DataFetch() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await ipcRenderer.invoke('fetch-data', 'https://rhythmverse.co/api/yarg/songfiles/search/live', formDataObj);
+      setLoading(true);
+
+      formData.set('page', page);
+      if (search.length < 3) {
+        formData.delete('text');
+      } else {
+        formData.set('text', search);
+      }
+
+      const formDataObj = Object.fromEntries(formData);
+      const result = await ipcRenderer.invoke('fetch-data', search.length < 3 ? listEndpoint : searchEndpoint, formDataObj);
+
       if (result.error) {
         setError(result.error);
       } else {
         setData(result);
+        setTotalPages(result.data.records.total_filtered / result.data.records.returned)
       }
+
       setLoading(false);
     }
 
     fetchData();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  }, [search, page]);
 
   return (
     <div>
-      <h1>Fetched Data</h1>
-      <SongList songs={data.data.songs} />
+      <SongContainer 
+        data={data.data}
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
+        setTotalPages={setTotalPages}
+        search={search} setSearch={setSearch}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 }
-//<pre>{JSON.stringify(data.data.songs, null, 2)}</pre>
+
 export default DataFetch;
