@@ -23,12 +23,15 @@ function DataFetch() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [pageSize, setPageSize] = useState(25);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
 
       formData.set('page', page);
+      formData.set('records', pageSize == -1 ? totalRecords : pageSize)
       if (search.length < 3) {
         formData.delete('text');
       } else {
@@ -43,13 +46,14 @@ function DataFetch() {
       } else {
         setData(result);
         setTotalPages(result.data.records.total_filtered / result.data.records.returned)
+        setTotalRecords(result.data.records.total_filtered)
       }
 
       setLoading(false);
     }
 
     fetchData();
-  }, [search, page]);
+  }, [search, page, pageSize]);
 
   return (
     <div>
@@ -59,6 +63,8 @@ function DataFetch() {
         setPage={setPage}
         totalPages={totalPages}
         setTotalPages={setTotalPages}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
         search={search} setSearch={setSearch}
         loading={loading}
         error={error}

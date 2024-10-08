@@ -4,7 +4,7 @@ import './SongContainer.css';
 import SearchInput from '../SearchInput/SearchInput.jsx';
 import Pagination from '../Pagination/Pagination.jsx';
 
-function SongContainer({ data, page, setPage, totalPages, setTotalPages, search, setSearch, loading, error }) {
+function SongContainer({ data, page, setPage, totalPages, setTotalPages, pageSize, setPageSize, search, setSearch, loading, error }) {
 
   return (
     <div className=".container">
@@ -23,7 +23,7 @@ function SongContainer({ data, page, setPage, totalPages, setTotalPages, search,
         <div className="spinner"></div>
       </div> : <div>
         <SongList songs={data.songs} />
-        <Pagination page={page} setPage={setPage} totalPages={totalPages} setTotalPages={setTotalPages}  />
+        <Pagination page={page} setPage={setPage} totalPages={totalPages} setTotalPages={setTotalPages} pageSize={pageSize} setPageSize={setPageSize}  />
       </div>
       }
 

@@ -62,13 +62,13 @@ function SongList({ songs }) {
           </div>
           <div className="song-uploader">
             <div className="uploader">
-              <img src={`https://rhythmverse.co${song.file.author.avatar_path}`} className="uploader-avatar" onError={({ currentTarget }) => {
+              <img src={`https://rhythmverse.co${song.file.author ? song.file.author.avatar_path : ''}`} className="uploader-avatar" onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
                 currentTarget.src = "https://rhythmverse.co/assets/media/placeholders/album.png";
               }} />
               <div className="column">
                 <p><strong>{song.file.user}</strong></p>
-                <p className="songs-released">{song.file.author.releases} songs</p>
+                <p className="songs-released">{song.file.author ? song.file.author.releases : ''} songs</p>
               </div>
             </div>
             <p className="upload-date">

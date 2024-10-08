@@ -1,7 +1,8 @@
 import React from 'react';
 import './Pagination.css';
+import SearchFilter from '../SearchFilter/SearchFilter.jsx';
 
-function Pagination({ page, setPage, totalPages }) {
+function Pagination({ page, setPage, totalPages, pageSize, setPageSize }) {
   const pagesShown = 10;
   const currentSet = Math.floor((page - 1) / pagesShown); // Defines the "set" of pages you are on (0 for 1-10, 1 for 11-20, etc.)
 
@@ -25,6 +26,7 @@ function Pagination({ page, setPage, totalPages }) {
   return (
     <div>
       <div className="page-container">
+        <SearchFilter pageSize={pageSize} setPageSize={setPageSize} />
         {/* Previous set button */}
         {currentSet > 0 && <p onClick={goToPrevSet}>{"<"}</p>}
 
