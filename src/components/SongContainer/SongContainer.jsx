@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SongList from '../SongList/SongList.jsx';
 import './SongContainer.css';
 import SearchInput from '../SearchInput/SearchInput.jsx';
@@ -7,7 +7,7 @@ import Pagination from '../Pagination/Pagination.jsx';
 function SongContainer({ data, page, setPage, totalPages, setTotalPages, pageSize, setPageSize, search, setSearch, loading, error }) {
 
   return (
-    <div className=".container">
+    <div className="container">
       <div className="filter">
         <div className="files">
           <h1>{!loading && !error ? data.records.total_filtered : 0}</h1>
